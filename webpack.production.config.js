@@ -12,7 +12,8 @@ module.exports = {
   },
   output: {
     path: __dirname + "/build",
-    filename: "/js/[name].[chunkhash:8].js"
+    filename: "/js/[name].[chunkhash:8].js",
+    publicPath: '/'
   },
 
   resolve:{

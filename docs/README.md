@@ -1,332 +1,5 @@
 
-# React 基础知识介绍
-
-本章节会介绍一些 React 的基础知识和基本用法。已经入门 React 基础的同学，可以简单看看这篇文档并略过视频内容。React 零基础的同学还建议去慕课网学习[React入门基础](http://www.imooc.com/learn/504)。
-
-另外，本教程的代码将全部使用 es6 语法，教程中我会介绍一些用到的 es6 语法，但是不会从头讲解了，推荐阅读[es6入门](http://es6.ruanyifeng.com/)
-
-
-## hello world
-
-以下是一个最简单的demo，将一个最简单的组件渲染到页面上。
-
-```jsx
-import React from 'react'
-import { render } from 'react-dom'
-
-// 定义组件
-class Hello extends React.Component {
-    render() {
-        // return 里面写jsx语法
-        return (
-            <p>hello world</p>
-        )
-    }
-}
-
-// 渲染组件到页面
-render(
-    <Hello/>,
-    document.getElementById('root')
-)
-```
-
-**深入一下，这里`import React from 'react'`引用的是什么？**
-
-这里的`'react'`对应的就是`./package.json`文件中`dependencies`中的`'react'`，即在该目录下用`npm install`安装的 react 。npm 安装的 react 的物理文件是存放在 `./node_modules/react`中的，因此引用的东西肯定就在这个文件夹里面。
-
-打开`./node_modules/react/package.json`找到`  "main": "react.js",`，这里的`main`即指定了入口文件，即`./node_modules/react/react.js`这个文件。那么，问题的答案自然就出来了。
-
-
-
-
-
-
-## jsx 语法
-
-React 里面写模板要使用 jsx 语法，它其实和 html 很相似但是又有那么几点不一样。下面简单介绍一下 jsx 语法的一些特点：
-
-### 使用一个父节点包裹
-
-jsx 中不能一次性返回零散的多个节点，如果有多个请包涵在一个节点中。例如，
-
-```jsx
-// 三个 <p> 外面必须再包裹一层 <div>
-return (
-  <div>
-    <p>段落1</p>
-    <p>段落2</p>
-    <p>段落3</p>
-  </div>
-)
-```
-
-再例如：
-
-```jsx
-// { } 中返回的两个 <p> 也要用 <div> 包裹
-return (
-  <div>
-    <p>段落1</p>
-    {
-      true 
-      ? <p>true</p>
-      : <div>
-        <p>false 1</p>
-        <p>false 2</p>
-      </div>
-    }
-  </div>
-)
-```
-
-### 注释
-
-jsx 中用`{/*  */}`的注释形式
-
-```jsx
-        return (
-            // jsx 外面的注释
-            <div>
-                {/* jsx 里面的注释 */}
-                <p>hello world</p>
-            </div>
-        )
-```
-
-### 样式
-
-对应 html 的两种形式，jsx 的样式可以这样写：
-css样式：`<p className="class1">hello world</p>`，注意这里是`className`，而 html 中是`class`
-内联样式：`<p style={{display: 'block', fontSize: '20px'}}>hello world</p>`，注意这里的`{{...}}`，还有`fontSize`的驼峰式写法
-
-### 事件
-
-拿 click 事件为例，要在标签上绑定 click 事件，可以这样写
-
-```jsx
-class Hello extends React.Component {
-    render() {
-        return (
-            <p onClick={this.clickHandler.bind(this)}>hello world</p>
-        )
-    }
-
-    clickHandler(e) {
-        // e 即js中的事件对象，例如 e.preventDefault()
-        // 函数执行时 this 即组件本身，因为上面的 .bind(this)
-        console.log(Date.now())
-    }
-}
-```
-
-注意，`onClick`是驼峰式写法，以及`.bind(this)`的作用
-
-### 循环
-
-在 jsx 中使用循环，一般会用到`Array.prototype.map`（来自ES5标准）
-
-```jsx
-class Hello extends React.Component {
-    render() {
-        const arr = ['a', 'b', 'c']
-        return (
-            <div>
-                {arr.map((item, index) => {
-                    return <p key={index}>this is {item}</p>
-                })}
-            </div>
-        )
-    }
-}
-```
-
-注意，`arr.map`是包裹在`{}`中的，`key={index}`有助于React的渲染优化，jsx中的`{}`可放一个可执行的 js 程序或者变量
-
-### 判断
-
-jsx中使用判断一般会用到三元表达式（表达式也是放在`{}`中的），例如：
-
-```jsx
-return (
-  <div>
-    <p>段落1</p>
-    {
-      true 
-      ? <p>true</p>
-      : <p>false</p>
-      </div>
-    }
-  </div>
-)
-```
-
-也可以这样使用：
-
-`<p style={{display: true ? 'block' ? 'none'}}>hello world</p>`
-
-
-
-
-
-
-## 代码分离
-
-之前的demo代码都是在一个文件中，实际开发中不可能是这样子的，因此这里就先把组件的代码给拆分开。我们将使用 es6 的模块管理规范。
-
-### page 层
-
-创建`./app/containers/Hello/index.jsx`文件，将之前创建组件代码复制进去
-
-```jsx
-import React from 'react'
-
-class Hello extends React.Component {
-    render() {
-        return (
-             <p>hello world</p>
-        )
-    }
-}
-
-export default Hello
-```
-
-然后`./app/index.jsx`中代码就可以这样写。
-
-```jsx
-import Hello from './containers/Hello';
-
-render(
-    <Hello/>,
-    document.getElementById('root')
-)
-```
-
-注意，代码`import Hello from './containers/Hello';`这里可以写成`./containers/Hello/index.jsx`也可以写成`./containers/Hello/index`
-
-### subpage 层
-
-如果`Hello`组件再稍微复杂一点，那么把代码都放一块也会变得复杂，接下来我们再拆分。
-
-创建`./app/containers/Hello/subpage`目录，然后在其下创建三个文件`Carousel.jsx` `Recommend.jsx` `List.jsx`，分别写入相应的代码（看代码文件即可），然后`./app/containers/Hello/index.js`中即可这样写
-
-```jsx
-import Carousel from './subpage/Carousel'
-import Recommend from './subpage/Recommend'
-import List from './subpage/List'
-
-class Hello extends React.Component {
-    render() {
-        return (
-            <div>
-                <p>hello world</p>
-                <hr/>
-                <Carousel/>
-                <Recommend/>
-                <List/>
-            </div>
-        )
-    }
-}
-```
-
-注意，这里`import`时`.jsx`后缀省略了。
-
-### component 层
-
-以上介绍的是页面和复杂页面的拆分，但那都是页面层级的，即`page`层。这里复杂页面拆分为`subpage`其实没啥特别的，就是把复杂页面的代码拆分一下，会更加符合**开放封闭原则**。而且，只有复杂页面才有必要去拆分，简单页面根本没必要拆分。因此，无论是`page`还是`subpage`它都是页面级别的。
-
-页面的特点是其独特性，一个页面就需要创建一个文件（如果两个页面可以共用一个文件，这是设计不合理，得治）。而页面其中的内容，就不一定是这样子了。例如，现在的APP每个页面最上面都会有个 header ，即可以显示标题，可以返回。每个页面都有，样子差不多，难道我们要为每个页面都做一个？——当然不是。
-
-创建`./app/components/Header/index.jsx`文件，简单写入一个组件的代码（见源码文件），然后在`./app/containers/index.jsx`中引用
-
-```jsx
-import Header from '../../components/Header'
-
-class Hello extends React.Component {
-    render() {
-        return (
-            <div>
-                <Header/>
-                {/* 省略其他内容 */}
-            </div>
-        )
-    }
-}
-```
-
-Hello 页面会用到 Header，以后的其他页面也会用到 Header ，我们把多个页面都可能用到的功能，封装到一个组件中，代码放在`./app/components`下。
-
-
-
-
-
-## 数据传递 & 数据变化
-
-### props
-
-接着刚才 Header 的话题往下说，每个页面都会使用 Header ，但是 Header 上显示的标题每个页面肯定是不一样的。我们需要这样解决：页面中引用Header时，这样写 `<Header title="Hello页面"/>`，即给 Header 组件设置一个 title 属性。而在 Header 组件中可以这样取到
-
-```jsx
-    render() {
-        return (
-             <p>{this.props.title}</p>
-        )
-    }
-```
-
-在 React 中，父组件给子组件传递数据时，就是以上方式，通过给子组件设置 props 的方式，子组件取得 props 中的值即可完成数据传递。被传递数据的格式可以是任何 js 可识别的数据结构，上面demo是一个字符串。**React 中，props 一般只作为父组件给子组件传递数据用，不要试图去修改自己的 props ，除非你想自找麻烦**
-
-## props && state
-
-上面提到了 props 不能被自身修改，如果组件内部自身的属性发生变化，该怎么办？—— React 为我们提供给了 `state`，先看一个demo：
-
-```jsx
-class Hello extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            // 显示当前时间
-            now: Date.now()
-        }
-    }
-    render() {
-        return (
-            <div>
-                <p>hello world {this.state.now}</p>
-            </div>
-        )
-    }
-}
-```
-
-还有一点非常重要，**React 会实时监听每个组件的 props 和 state 的值，一旦有变化，会立刻更新组件，将结果重新渲染到页面上**，下面demo演示了`state`的变化，`props`也是一样的
-
-```jsx
-class Hello extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        this.state = {
-            // 显示当前时间
-            now: Date.now()
-        }
-    }
-    render() {
-        return (
-            <div>
-                <p onClick={this.clickHandler.bind(this)}>hello world {this.state.now}</p>
-            </div>
-        )
-    }
-    clickHandler() {
-        // 设置 state 的值的时候，一定要用 this.setState ，不能直接赋值修改
-        this.setState({
-            now: Date.now()
-        })
-    }
-}
-```
+# 知识点总结
 
 
 ## 智能组件 & 木偶组件
@@ -340,47 +13,126 @@ class Hello extends React.Component {
 
 
 
+## 性能检测
 
-## 生命周期
+安装 react 性能检测工具 `npm i react-addons-perf --save`，然后在`./app/index.jsx`中
 
-React 详细的生命周期可参见[这里](http://reactjs.cn/react/docs/component-specs.html)，也可查阅本文档一开始的视频教程。这里我们重点介绍这个项目开发中常用的几个生命周期函数（hook），相信你在接下来的 React 开发中，也会常用这些。
-
-以下声明周期，也没必要每个都写demo来解释，先简单了解一下，后面会根据实际的例子来解释，这样会更加易懂。
-
-- **`getInitialState`**
-
-初始化组件 state 数据，但是在 es6 的语法中，我们可以使用以下书写方式代替
-
-```jsx
-class Hello extends React.Component {
-    constructor(props, context) {
-        super(props, context);
-        // 初始化组件 state 数据
-        this.state = {
-            now: Date.now()
-        }
-    }
+```js
+// 性能测试
+import Perf from 'react-addons-perf'
+if (__DEV__) {
+    window.Perf = Perf
 }
 ```
 
-- **`render`**
+运行程序。在操作之前先运行`Perf.start()`开始检测，然后进行若干操作，运行`Perf.stop`停止检测，然后再运行`Perf.printWasted()`即可打印出浪费性能的组件列表。在项目开发过程中，要经常使用检测工具来看看性能是否正常。
 
-最常用的hook，返回组件要渲染的模板。
+如果性能的影响不是很大，例如每次操作多浪费几毫秒、十几毫秒，个人以为没必要深究，但是如果浪费过多影响了用户体验，就必须去搞定它。
 
-- **`comopentDidMount`**
 
-组件第一次加载时渲染完成的事件，一般在此获取网络数据。实际开始项目开发时，会经常用到。
 
-- **`shouldComponentUpdate`**
+## PureRenderMixin 优化
 
-主要用于性能优化，React 的性能优化也是一个很重要的话题，后面一并讲解。
+React 最基本的优化方式是使用[PureRenderMixin](http://reactjs.cn/react/docs/pure-render-mixin.html)，安装工具 `npm i react-addons-pure-render-mixin --save`，然后在组件中引用并使用
 
-- **`componentDidUpdate`**
+```jsx
+import React from 'react'
+import PureRenderMixin from 'react-addons-pure-render-mixin'
 
-组件更新了之后触发的事件，一般用于清空并更新数据。实际开始项目开发时，会经常用到。
+class List extends React.Component {
+    constructor(props, context) {
+        super(props, context);
+        this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);
+    }
+    //...省略其他内容...
+}
+```
 
-- **`componentWillUnmount`**
+React 有一个生命周期 hook 叫做`shouldComponentUpdate`，组件每次更新之前，都要过一遍这个函数，如果这个函数返回`true`则更新，如果返回`false`则不更新。而默认情况下，这个函数会一直返回`true`，就是说，如果有一些无效的改动触发了这个函数，也会导致无效的更新
 
-组件在销毁之前触发的事件，一般用户存储一些特殊信息，以及清理`setTimeout`事件等。
+那么什么是无效的改动？之前说过，组件中的`props`和`state`一旦变化会导致组件重新更新并渲染，但是如果`props`和`state`没有变化也莫名其妙的触发更新了呢（这种情况确实存在）———— 这不就导致了无效渲染吗？
+
+这里使用`this.shouldComponentUpdate = PureRenderMixin.shouldComponentUpdate.bind(this);`的意思是重写组件的`shouldComponentUpdate`函数，在每次更新之前判断`props`和`state`，如果有变化则返回`true`，无变化则返回`false`。
+
+因此，我们在开发过程中，在每个 React 组件中都尽量使用`PureRenderMixin`
+
+
+
+## Immutable.js 优化
+
+React 的终极优化是使用 [Immutable.js](https://facebook.github.io/immutable-js/) 来处理数据，Immutable 实现了 js 中不可变数据的概念。
+
+但是也不是所有的场景都适合用它，当我们组件的`props`和`state`中的数据结构层次不深（例如普通的数组、对象等）的时候，就没必要用它。但是当数据结构层次很深（例如`obj.x.y.a.b = 10`这种），你就得考虑使用了。
+
+之所以不轻易使用是，Immutable 定义了一种新的操作数据的语法，如下。和我们平时操作 js 数据完全不一样，而且每个地方都得这么用，学习成本高、易遗漏，风险很高。
+
+```js
+    var map1 = Immutable.Map({a:1, b:2, c:3});
+    var map2 = map1.set('b', 50);
+    map1.get('b'); // 2
+    map2.get('b'); // 50
+```
+
+因此，这里建议优化还是要从设计着手，尽量把数据结构设计的扁平一些，这样既有助于优化系统性能，又减少了开发复杂度和开发成本。
+
+
+
+## router
+
+使用到了 router 的项目，其规模不会太小，代码量也不会太少。但是如果项目规模非常非常大的情况下，就会带来各种性能问题，其中给一个就是——视屏时间。
+
+就像我们这次的demo，如何让`/`路由（即首页）加载的更快？抛开代码效率问题，其中一个解决方案就是先不要加载其他页面的代码，**即首页需要哪些代码我就先加载、执行哪些，不需要的就先别加载**。
+
+反观我们现在的做法，页面一出来，不管暂时有用没用的代码，都统统加载下来了。如果项目规模很大、代码行数很多的时候，就不行了。
+
+针对大型项目的**静态资源懒加载**问题，react-router 也给出了解决方案 —— [huge-apps](https://github.com/ReactTraining/react-router/tree/master/examples/huge-apps)，它将 react-router 本身和 webpack 的 `require.ensure` 结合起来，就解决了这一问题。
+
+不过——最后——我们还是不用这种方式——因为我们的项目还没有到那种规模。任何收获都要付出相应的代价，设计越复杂风险就越大，因此我推崇精简设计。至于这个“静态资源懒加载”，大家看一下刚才的源码就能明白了。
+
+
+
+## 数据 Mock
+
+在目前互联网行业 web 产品开发中，前后端大部分都是分离开发的，前端开发过程中无法实时得到后端的数据。这种情况下，一般会使用三种方式：
+
+- **模拟静态数据**：即按照既定的数据格式，自己提供一些静态的JSON数据，用相关工具（如[fis3](http://fis.baidu.com/fis3/docs/node-mock.html)）做接口来获取这些数据。该形式使用不比较简单的、只用 get 方法的场景，该项目不适用。
+- **模拟动态接口**：即自己用一个 web 框架，按照既定的接口和数据结构的要求，自己模拟后端接口的功能，让前端项目能顺利跑起来。该方式适用于新开发的项目，后端和前端同时开发，适用于该教程的项目。
+- **转发线上接口**：项目开发中，所有的接口直接用代理获取线上的数据，post 的数据也都直接提交到线上。该方式适用于成熟项目中，而该项目是新开发的，没有线上接口，不适用。
+
+最后强调一下，该教程是一个前端教程，面向的是前端工程师，后端的开发和处理交给后端工程师来做。后端的业务处理和开发过程，不在本教程的讲解范围之内。
+
+### 模拟接口
+
+我们将模拟接口的代码都写在`./mock`目录下，接口文件是`./mock/server.js`（目前只有这一个文件，真正开发项目时，应该会分不同模块）。
+
+然后在`./package.json`中增加如下代码，然后执行`npm run mock`即可启动模拟的接口服务。
+
+```
+  "scripts": {
+    "mock": "node --harmony ./mock/server.js",
+  },
+```
+
+启动之后，随便找一个 get 的接口，访问以下，例如`http://localhost:3000/api/1`
+
+### 使用 webpack-dev-server 的代理
+
+到这里你可能会有一个疑问————koa 接口的端口是`3000`，而我们项目的接口是`8080`，这样不就跨域了吗？————如果默认情况下，肯定是跨域了。此时就需要 webpack-dev-server 做一个代理的转发。配置代码在`./webpack.config.js`中
+
+```js
+    devServer: {
+        proxy: {
+          // 凡是 `/api` 开头的 http 请求，都会被代理到 localhost:3000 上，由 koa 提供 mock 数据。
+          // koa 代码在 ./mock 目录中，启动命令为 npm run mock
+          '/api': {
+            target: 'http://localhost:3000',
+            secure: false
+          }
+        },
+        // ...省略若干代码...
+    }
+```
+
+
 
 

@@ -23,6 +23,10 @@ module.exports = {
         ]
     },
 
+    eslint: {
+        configFile: '.eslintrc' // Rules for eslint
+    },
+
     postcss: [
         require('autoprefixer') //调用autoprefixer插件，例如 display: flex
     ],
@@ -48,6 +52,15 @@ module.exports = {
     ],
 
     devServer: {
+        proxy: {
+            // 凡是 `/api` 开头的 http 请求，都会被代理到 localhost:3000 上，由 koa 提供 mock 数据。
+            // koa 代码在 ./mock 目录中，启动命令为 npm run mock
+            '/api': {
+              target: 'http://localhost:3000',
+              secure: false
+            }
+          },
+        contentBase: "./public", //本地服务器所加载的页面所在的目录
         colors: true, //终端中输出结果为彩色
         historyApiFallback: true, //不跳转，在开发单页应用时非常有用，它依赖于HTML5 history API，如果设置为true，所有的跳转将指向index.html
         inline: true, //实时刷新
