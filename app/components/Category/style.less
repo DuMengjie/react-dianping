@@ -1,0 +1,136 @@
+#home-category {
+    background-color: #fff;
+    padding: 10px;
+
+    .carousel-item {
+        ul {
+            width: 100%;
+            height: auto;
+        }
+        li {
+            display: block;
+            list-style: none;
+            width: 20%;
+            background-repeat: no-repeat;
+            background-size: 50px auto;
+            background-position: top center;
+            text-align: center;
+            padding-top: 50px;
+            color: #666;
+            font-size: 14px;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABaCAYAAAA4qEECAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA3hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMDY3IDc5LjE1Nzc0NywgMjAxNS8wMy8zMC0yMzo0MDo0MiAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo0ZmIzZjdmNy0yNmYwLTRkZjItOWVmZi1iODJhYTY2NzMzZDgiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RDVEMTE3M0I3MUE2MTFFNjk4MDdCNUZCODI2QkQ1NTEiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RDVEMTE3M0E3MUE2MTFFNjk4MDdCNUZCODI2QkQ1NTEiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTUgKE1hY2ludG9zaCkiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDo2OWEyZmM2Ni00NDYwLTQzN2QtODY2My1lYWE5Y2ZiM2UxZDIiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6NGZiM2Y3ZjctMjZmMC00ZGYyLTllZmYtYjgyYWE2NjczM2Q4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);
+        }
+        // li.jingdian {
+        //     background-image: url('../../static/img/01丽人icon_7.png');
+        // }
+        // li.ktv {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224309185-1519181081.png);
+        // }
+        // li.gouwu {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224150045-30962603.png);
+        // }
+        // li.shenghuofuwu {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224237513-176380794.png);
+        // }
+        // li.jianshenyundong {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224256732-145714491.png);
+        // }
+        // li.meifa {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224222123-643915682.png);
+        // }
+        // li.qinzi {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224229451-475201730.png);
+        // }
+        // li.xiaochikuaican {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224244545-1583700011.png);
+        // }
+        // li.zizhucan {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224113560-1012968440.png);
+        // }
+        // li.jiuba {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224210732-490953965.png);
+        // }
+        // li.meishi {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224409107-2018112337.png);
+        // }
+        // li.dianying {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224033873-290248113.png);
+        // }
+        // li.jiudian {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224051513-2057698989.png);
+        // }
+        // li.xuixianyule {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224129076-2058206915.png);
+        // }
+        // li.waimai {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224121920-424129491.png);
+        // }
+        // li.huoguo {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224046342-1896393176.png);
+        // }
+        // li.liren {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224057670-257626875.png);
+        // }
+        // li.dujiachuxing {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224040842-2050913385.png);
+        // }
+        // li.zuliaoanmo {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224144060-1009120401.png);
+        // }
+        // li.zhoubianyou {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224138123-197921773.png);
+        // }
+        // li.ribencai {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224354951-1102565687.png);
+        // }
+        // li.SPA {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224419998-1442330810.png);
+        // }
+        // li.jiehun {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224340545-213074048.png);
+        // }
+        // li.xuexipeixun {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224415013-114294334.png);
+        // }
+        // li.xican {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224409107-2018112337.png);
+        // }
+        // li.huochejipiao {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224323467-1926976043.png);
+        // }
+        // li.shaokao {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224402576-1611337354.png);
+        // }
+        // li.jiazhuang {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224333185-1082315113.png);
+        // }
+        // li.chongwu {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224315779-157132725.png);
+        // }
+        // li.quanbufenlei {
+        //     background-image: url(http://images2015.cnblogs.com/blog/138012/201610/138012-20161022224348467-646596364.png);
+        // }
+    }
+
+    .index-container {
+        margin-top: 10px;
+
+        ul {
+            width: 100%;
+            height: auto;
+            text-align: center;
+        }
+        li {
+            list-style: none;
+            display: inline-block;
+            height: 8px;
+            width: 8px;
+            border-radius: 4px;
+            background-color: #ccc;
+            margin: 0 3px;
+        }
+        li.selected {
+            background-color: rgb(233, 32, 61);
+        }
+    }
+}
