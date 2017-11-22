@@ -29,7 +29,7 @@ class App extends React.Component {
 
     render(){
         return(
-            <div>
+            <div id="container">
                 {
                     this.state.initDone
                     ? this.props.children

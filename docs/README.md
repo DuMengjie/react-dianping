@@ -135,4 +135,43 @@ React 的终极优化是使用 [Immutable.js](https://facebook.github.io/immutab
 
 
 
+## 约束性和非约束性组件
+
+**非约束性**
+
+针对`<input>`输入框这种类型，你可以通过这种方式来实现（其中`defaultValue`就是原生DOM中的`value`属性）
+
+```
+<input type="text" defaultValue="a" ref="input"/>
+```
+
+获取输入框的值的时候，需要这样做——即通过查询DOM，获取DOM属性的方式来做。
+
+```
+var input = this.refs.input
+console.log(input.value)
+```
+
+这样做，跟之前jquery的做法一样，都是围绕着DOM来做的。缺点有两个：
+
+- 依赖DOM操作，不符合组件化的设计，也不易扩展
+- 查询DOM消耗更多性能
+
+**约束性**
+
+比较推荐的方式是这一种。即监控`<input>`的变化，将值实时保存到`state`中，直接从`state`中获取值。
+
+```
+<input type="text" value={this.state.name} onChange={this.handleChange} />
+
+//...省略部分代码
+handleChange: function(e) {
+  this.setState({name: e.target.value});
+}
+```
+
+React或者Vue都是一种基于数据驱动视图的设计方式，定好数据和视图的规则之后，只更改数据，不直接操作DOM。操作DOM的事情，交给React或者Vue这个框架的代码来搞定。
+
+
+
 

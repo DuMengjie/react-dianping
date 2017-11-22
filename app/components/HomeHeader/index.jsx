@@ -1,5 +1,8 @@
 import React from 'react'
-import './style.less';
+import { Link } from 'react-router'
+import { hashHistory } from 'react-router'
+import SearchInput from '../SearchInput'
+import './style.less'
 
 // const HomeHeader = (props) => (
 //     <div id="home-header">
@@ -22,18 +25,23 @@ class HomeHeader extends React.Component {
         return (
             <div id="home-header">
                 <div>
-                    <span>{this.props.cityName}</span>
-                    <i className="icon-angle-down"></i>
+                    <Link to="/city">
+                        <span>{this.props.cityName}</span>
+                        <i className="icon-angle-down"></i>
+                    </Link>
                 </div>
                 <div>
                     <div className="search-container">
                         <i className="icon-search"></i>
-                        <input type="text" placeholder="请输入商品名称" /> 
+                        <SearchInput value="" enterHandle={this.enterHandle.bind(this)} />
                     </div>
                 </div>
                 <div><i className="icon-user"></i></div>
             </div>
         )
+    }
+    enterHandle(value) {
+        hashHistory.push('/search/all/' + encodeURIComponent(value))
     }
 }
 
