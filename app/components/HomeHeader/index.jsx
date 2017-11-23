@@ -36,7 +36,7 @@ class HomeHeader extends React.Component {
                         <SearchInput value="" enterHandle={this.enterHandle.bind(this)} />
                     </div>
                 </div>
-                <div><i className="icon-user"></i></div>
+                <div><Link to="/User"><i className="icon-user"></i></Link></div>
             </div>
         )
     }

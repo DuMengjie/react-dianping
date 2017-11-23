@@ -1,5 +1,6 @@
 import React from 'react'
 import './style.less'
+import { hashHistory } from 'react-router'
 
 class Header extends React.Component {
     render() {
@@ -14,7 +15,12 @@ class Header extends React.Component {
     }
 
     clickHandle() {
-        window.history.back()
+        const backRouter = this.props.backRouter
+        if (backRouter) {
+            hashHistory.push(hashHistory)
+        } else {
+            window.history.back()
+        }
     }
 }
 
