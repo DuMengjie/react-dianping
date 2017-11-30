@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import UserInfo from '../../components/UserInfo'
 import Header from '../../components/Header'
+import OrderList from './subpage/OrderList'
 
 class User extends React.Component {
     render() {
@@ -12,11 +13,11 @@ class User extends React.Component {
             <div>
                 <Header title="用户信息" backRouter="/home" />
                 <UserInfo username={this.props.userinfo.username} city={this.props.userinfo.cityName} />
+                <OrderList username={this.props.userinfo.username}/>
             </div>
         )
     }
     componentDidMount() {
-        console.log(this.props.userinfo)
         if(!this.props.userinfo.username){
             hashHistory.push('/Login')
         }

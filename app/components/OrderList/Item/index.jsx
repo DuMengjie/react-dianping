@@ -13,7 +13,7 @@ class Item extends React.Component {
         return (
             <div className="clear-fix order-item-container">
                 <div className="order-item-img float-left">
-                    <img src={data.img}/>
+                    <img src={require('../../../static/img/list.png')}/>
                 </div>
                 <div className="order-item-comment float-right">
                     <button>评价</button>
